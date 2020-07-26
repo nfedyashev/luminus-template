@@ -69,7 +69,10 @@ The default server is [jetty](https://github.com/luminus-framework/luminus-jetty
 </tr>
 </table>
 
-
+| Command | Description |
+| --- | --- |
+| git status | List all new or modified files |
+| git diff | Show file differences that haven't been staged |
 
 ### service API
 
