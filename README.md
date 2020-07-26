@@ -39,16 +39,36 @@ The default server is [jetty](https://github.com/luminus-framework/luminus-jetty
 * `+datomic` adds support for the [Datomic](http://www.datomic.com/) database
 * `+sqlite` adds support for the [SQLite](https://www.sqlite.org/) database
 
-
 <table>
-  <tr>
-    <td>One</td>
-    <td>Two</td>
-  </tr>
-  <tr>
-    <td colspan="2">Three</td>
-  </tr>
+<tr>
+  <td colspan=2>databases</td>
+</tr>
+
+<tr>
+  <td>+h2</td><td>adds db.core namespace and [H2 database][h2] dependencies [[diff]][h2-diff]</td>
+</tr>
+
+<tr>
+  <td>+postgres</td><td>adds db.core namespace and add [PostreSQL database][pg] dependencies</td></td>
+</tr>
+
+<tr>
+  <td>+mysql</td><td>adds db.core namespace and add [MySQL/MariaDB database][my] dependencies</td>
+</tr>
+
+<tr>
+  <td>+mongodb</td><td>adds support for [MongoDB][mongo] using the [Monger][monger] library</td>
+</tr>
+
+<tr>
+  <td>+datomic</td><td>adds support for the [Datomic](http://www.datomic.com/) database</td>
+</tr>
+
+<tr>
+  <td>+sqlite</td><td>adds support for the [SQLite](https://www.sqlite.org/) database</td>
+</tr>
 </table>
+
 
 
 ### service API
