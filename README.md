@@ -39,6 +39,18 @@ The default server is [jetty](https://github.com/luminus-framework/luminus-jetty
 * `+datomic` adds support for the [Datomic](http://www.datomic.com/) database
 * `+sqlite` adds support for the [SQLite](https://www.sqlite.org/) database
 
+
+<table>
+  <tr>
+    <td>One</td>
+    <td>Two</td>
+  </tr>
+  <tr>
+    <td colspan="2">Three</td>
+  </tr>
+</table>
+
+
 ### service API
 
 * `+graphql` - adds GraphQL support using [Lacinia](https://github.com/walmartlabs/lacinia)
