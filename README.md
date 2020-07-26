@@ -32,7 +32,7 @@ The default server is [jetty](https://github.com/luminus-framework/luminus-jetty
 
 ### databases
 
-* `+h2` adds db.core namespace and [H2 database][h2] dependencies [diff][h2-diff]
+* `+h2` adds db.core namespace and [H2 database][h2] dependencies [[diff]][h2-diff]
 * `+postgres` adds db.core namespace and add [PostreSQL database][pg] dependencies
 * `+mysql` adds db.core namespace and add [MySQL/MariaDB database][my] dependencies
 * `+mongodb` adds support for [MongoDB][mongo] using the [Monger][monger] library
