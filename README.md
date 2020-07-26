@@ -41,11 +41,11 @@ The default server is [jetty](https://github.com/luminus-framework/luminus-jetty
 
 <table>
 <tr>
-  <td colspan=2>databases</td>
+  <td colspan=3>databases</td>
 </tr>
 
 <tr>
-  <td>+h2</td><td>adds db.core namespace and [H2 database][h2] dependencies [[diff]][h2-diff]</td>
+  <td>+h2</td><td>adds db.core namespace and [H2 database][h2] dependencies </td><td>[diff]</td>
 </tr>
 
 <tr>
