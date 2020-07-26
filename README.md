@@ -46,11 +46,11 @@ The default server is [jetty](https://github.com/luminus-framework/luminus-jetty
   </tr></thead>
 
 <tr>
-  <td>*+h2*</td><td>adds db.core namespace and [H2 database][h2] dependencies </td><td>[diff]</td>
+  <td><b>+h2</b></td><td>adds db.core namespace and [H2 database][h2] dependencies </td><td>[diff]</td>
 </tr>
 
 <tr>
-  <td>**+postgres**</td><td>adds db.core namespace and add [PostreSQL database][pg] dependencies</td></td>
+  <td><strong>+postgres</strong></td><td>adds db.core namespace and add [PostreSQL database][pg] dependencies</td></td>
 </tr>
 
 <tr>
