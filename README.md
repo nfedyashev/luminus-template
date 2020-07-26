@@ -40,20 +40,21 @@ The default server is [jetty](https://github.com/luminus-framework/luminus-jetty
 * `+sqlite` adds support for the [SQLite](https://www.sqlite.org/) database
 
 <table>
+<thead>
 <tr>
-  <td colspan=3>databases</td>
+  <th colspan=3>Databases</tH>
+  </tr></thead>
+
+<tr>
+  <td>*+h2*</td><td>adds db.core namespace and [H2 database][h2] dependencies </td><td>[diff]</td>
 </tr>
 
 <tr>
-  <td>+h2</td><td>adds db.core namespace and [H2 database][h2] dependencies </td><td>[diff]</td>
+  <td>**+postgres**</td><td>adds db.core namespace and add [PostreSQL database][pg] dependencies</td></td>
 </tr>
 
 <tr>
-  <td>+postgres</td><td>adds db.core namespace and add [PostreSQL database][pg] dependencies</td></td>
-</tr>
-
-<tr>
-  <td>+mysql</td><td>adds db.core namespace and add [MySQL/MariaDB database][my] dependencies</td>
+  <td>***+mysql***</td><td>adds db.core namespace and add [MySQL/MariaDB database][my] dependencies</td>
 </tr>
 
 <tr>
