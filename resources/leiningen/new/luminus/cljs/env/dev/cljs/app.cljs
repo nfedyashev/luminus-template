@@ -1,9 +1,9 @@
-(ns<% if not hoplon %><% if shadow-cljs %> ^:dev/once<% else %>^:figwheel-no-load<% endif %><% endif %> <<project-ns>>.app
+(ns <% if not hoplon %><% if shadow-cljs %>^:dev/once<% else %>^:figwheel-no-load<% endif %><% endif %> <<project-ns>>.app
   (:require
-    [<<project-ns>>.core :as core]
-    [cljs.spec.alpha :as s]
-    [expound.alpha :as expound]
-    [devtools.core :as devtools]))
+   [<<project-ns>>.core :as core]
+   [cljs.spec.alpha :as s]
+   [expound.alpha :as expound]
+   [devtools.core :as devtools]))
 
 (extend-protocol IPrintWithWriter
   js/Symbol

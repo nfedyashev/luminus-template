@@ -4,14 +4,12 @@
  :resource-paths <<resource-paths>><% endif %>)
 (require '[clojure.java.io :as io]
          '[clojure.edn :as edn]
-         '[adzerk.boot-test :refer [test]])
-<% if cljs %>
+         '[adzerk.boot-test :refer [test]])<% if cljs %>
 (require '[adzerk.boot-cljs :refer [cljs]]
          '[adzerk.boot-cljs-repl :refer [cljs-repl]])
 <% endif %><% if sassc-config-params %>
 (require '[deraen.boot-sass :refer [sass]])
-<% endif %>
-<% if migrations %>
+<% endif %><% if migrations %>
 (require '[luminus.boot-migratus :refer [migratus]])
 <% endif %>
 (deftask dev

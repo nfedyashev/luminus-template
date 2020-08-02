@@ -1,17 +1,17 @@
 (ns <<project-ns>>.routes.services
   (:require
-    [reitit.swagger :as swagger]
-    [reitit.swagger-ui :as swagger-ui]
-    [reitit.ring.coercion :as coercion]
-    [reitit.coercion.spec :as spec-coercion]
-    [reitit.ring.middleware.muuntaja :as muuntaja]
-    [reitit.ring.middleware.multipart :as multipart]
-    [reitit.ring.middleware.parameters :as parameters]<% if graphql %>
-    [<<project-ns>>.routes.services.graphql :as graphql]<% endif %>
-    [<<project-ns>>.middleware.formats :as formats]
-    [<<project-ns>>.middleware.exception :as exception]
-    [ring.util.http-response :refer :all]
-    [clojure.java.io :as io]))
+   [reitit.swagger :as swagger]
+   [reitit.swagger-ui :as swagger-ui]
+   [reitit.ring.coercion :as coercion]
+   [reitit.coercion.spec :as spec-coercion]
+   [reitit.ring.middleware.muuntaja :as muuntaja]
+   [reitit.ring.middleware.multipart :as multipart]
+   [reitit.ring.middleware.parameters :as parameters]<% if graphql %>
+   [<<project-ns>>.routes.services.graphql :as graphql]<% endif %>
+   [<<project-ns>>.middleware.formats :as formats]
+   [<<project-ns>>.middleware.exception :as exception]
+   [ring.util.http-response :refer :all]
+   [clojure.java.io :as io]))
 
 (defn service-routes []
   ["/api"
@@ -45,12 +45,11 @@
 
     ["/api-docs/*"
      {:get (swagger-ui/create-swagger-ui-handler
-             {:url "/api/swagger.json"
-              :config {:validator-url nil}})}]]
+            {:url "/api/swagger.json"
+             :config {:validator-url nil}})}]]
 
    ["/ping"
-    {:get (constantly (ok {:message "pong"}))}]
-   <% if graphql %>
+    {:get (constantly (ok {:message "pong"}))}]<% if graphql %>
    ["/graphql" {:no-doc true
                 :post (fn [req] (ok (graphql/execute-request (-> req :body slurp))))}]<% endif %>
 

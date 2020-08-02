@@ -7,5 +7,5 @@
      (-> options
          (append-formatted :auth-session
                            [['buddy.auth.backends.session :refer ['session-backend]]]
-                           plugin-indent))]
+                           nikita-indent))]
     state))

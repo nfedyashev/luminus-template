@@ -1,9 +1,9 @@
 (ns <<project-ns>>.view
   (:require
-    [kee-frame.core :as kf]<%if expanded %>
-    [markdown.core :refer [md->html]]<% endif %>
-    [reagent.core :as r]
-    [re-frame.core :as rf]))
+   [kee-frame.core :as kf]<%if expanded %>
+   [markdown.core :refer [md->html]]<% endif %>
+   [reagent.core :as r]
+   [re-frame.core :as rf]))
 
 (defn nav-link [title page]
   [:a<% if expanded %>.navbar-item<% endif %>
@@ -20,7 +20,7 @@
        {:data-target :nav-menu
         :on-click #(swap! expanded? not)
         :class (when @expanded? :is-active)}
-       [:span][:span][:span]]]
+       [:span] [:span] [:span]]]
      [:div#nav-menu.navbar-menu
       {:class (when @expanded? :is-active)}
       [:div.navbar-start
@@ -43,6 +43,6 @@
   [:div
    [navbar]
    [kf/switch-route (fn [route] (get-in route [:data :name]))
-    :home home-page <% if expanded %>
-    :about about-page <% endif %>
+    :home home-page<% if expanded %>
+    :about about-page<% endif %>
     nil [:div ""]]])

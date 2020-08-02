@@ -14,5 +14,5 @@
                            [['buddy.auth.middleware :refer ['wrap-authentication 'wrap-authorization]]
                             ['buddy.auth.accessrules :refer ['restrict]]
                             ['buddy.auth :refer ['authenticated?]]]
-                           plugin-indent))]
+                           nikita-indent))]
     state))

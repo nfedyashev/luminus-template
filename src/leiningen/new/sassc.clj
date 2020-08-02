@@ -37,6 +37,6 @@
            (assoc :sassc-docs ((:selmer-renderer options)
                                (slurp-resource "sassc/docs/sassc_instructions.md")
                                options))
-           (assoc :sassc-config-params (unwrap-map (indent root-indent (sassc-config options))))
-           (assoc :sassc-auto-config (unwrap-map (indent root-indent (sassc-auto-config options)))))])
+           (assoc :sassc-config-params (unwrap-map (indent 1 (sassc-config options)))) ;;TODO extract as new indent top form? How to name it?
+           (assoc :sassc-auto-config (unwrap-map (indent 1 (sassc-auto-config options)))))]) ;;TODO extract as new indent top form? How to name it?
     state))

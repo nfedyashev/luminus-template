@@ -130,10 +130,13 @@
           :cljs-uberjar-prep (if shadow-cljs?
                                ":prep-tasks [\"compile\" [\"shadow\" \"release\" \"app\"]]"
                                ":prep-tasks [\"compile\" [\"cljsbuild\" \"once\" \"min\"]]"))
-         (merge (when-not shadow-cljs? {:figwheel (indent root-indent (figwheel options))
-                                        :dev-cljsbuild (indent dev-indent (dev-cljsbuild options))
-                                        :test-cljsbuild (indent dev-indent (test-cljsbuild options))
-                                        :uberjar-cljsbuild (indent uberjar-indent (uberjar-cljsbuild options))}))
+         ;;FIXME cljsbuild
+         (merge (when-not shadow-cljs? {:figwheel (indent 12 (figwheel options))
+                                        :dev-cljsbuild (indent (+ 11 dev-indent) (dev-cljsbuild options))
+                                        ;; FIXME cljsbuild
+                                        :test-cljsbuild (indent (+ 11 dev-indent) (test-cljsbuild options))
+                                        ;; FIXME extract cljsbuild
+                                        :uberjar-cljsbuild (indent (+ uberjar-indent 11) (uberjar-cljsbuild options))}))
          (append-options :source-paths [(:client-path options) (:cljc-path options)])
          (append-options :resource-paths resource-paths)
          (append-options :dev-dependencies (if shadow-cljs? [] cljs-lein-dev-dependencies)))]))

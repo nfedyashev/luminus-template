@@ -9,5 +9,5 @@
                            [['buddy.auth.backends.token :refer ['jwe-backend]]
                             ['buddy.sign.jwt :refer ['encrypt]]
                             ['buddy.core.nonce :refer ['random-bytes]]]
-                           plugin-indent))]
+                           nikita-indent))]
     state))

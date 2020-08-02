@@ -1,25 +1,25 @@
 (ns <<project-ns>>.middleware
   (:require
-    [<<project-ns>>.env :refer [defaults]]<% if not service %>
-    [cheshire.generate :as cheshire]
-    [cognitect.transit :as transit]
-    [clojure.tools.logging :as log]
-    [<<project-ns>>.layout :refer [error-page]]
-    [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
-    [<<project-ns>>.middleware.formats :as formats]
-    [muuntaja.middleware :refer [wrap-format wrap-params]]<% endif %>
-    [<<project-ns>>.config :refer [env]]<% if undertow-based %>
-    [ring.middleware.flash :refer [wrap-flash]]<% ifequal server "immutant" %>
-    [immutant.web.middleware :refer [wrap-session]]<% else %>
-    [ring.adapter.undertow.middleware.session :refer [wrap-session]]<% endifequal %><% else %>
-    [ring-ttl-session.core :refer [ttl-memory-store]]<% endif %>
-    [ring.middleware.defaults :refer [site-defaults wrap-defaults]]<% if auth-middleware-required %>
-    <<auth-middleware-required>><% if auth-session %>
-    <<auth-session>><% endif %><% if auth-jwe %>
-    <<auth-jwe>>[buddy.sign.util :refer [to-timestamp]]<% endif %><% endif %>)<% if not service %>
-  <% if any auth-jwe servlet %> (:import
-    <% if auth-jwe %>[java.util Calendar Date]<% endif %>
-    <% if servlet %>[javax.servlet ServletContext]<% endif %>)<% endif %><% endif %>)
+   [<<project-ns>>.env :refer [defaults]]<% if not service %>
+   [cheshire.generate :as cheshire]
+   [cognitect.transit :as transit]
+   [clojure.tools.logging :as log]
+   [<<project-ns>>.layout :refer [error-page]]
+   [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
+   [<<project-ns>>.middleware.formats :as formats]
+   [muuntaja.middleware :refer [wrap-format wrap-params]]<% endif %>
+   [<<project-ns>>.config :refer [env]]<% if undertow-based %>
+   [ring.middleware.flash :refer [wrap-flash]]<% ifequal server "immutant" %>
+   [immutant.web.middleware :refer [wrap-session]]<% else %>
+   [ring.adapter.undertow.middleware.session :refer [wrap-session]]<% endifequal %><% else %>
+   [ring-ttl-session.core :refer [ttl-memory-store]]<% endif %>
+   [ring.middleware.defaults :refer [site-defaults wrap-defaults]]<% if auth-middleware-required %>
+   <<auth-middleware-required>><% if auth-session %>
+   <<auth-session>><% endif %><% if auth-jwe %>
+   <<auth-jwe>>
+   [buddy.sign.util :refer [to-timestamp]]<% endif %><% endif %>)<% if not service %><% if any auth-jwe servlet %>
+  (:import
+   <% if auth-jwe %>[java.util Calendar Date]<% endif %><% if servlet %>[javax.servlet ServletContext]<% endif %>)<% endif %><% endif %>)
 <% if not service %><% if servlet %>
 (defn wrap-context [handler]
   (fn [request]
@@ -47,12 +47,11 @@
 
 (defn wrap-csrf [handler]
   (wrap-anti-forgery
-    handler
-    {:error-response
-     (error-page
-       {:status 403
-        :title "Invalid anti-forgery token"})}))
-
+   handler
+   {:error-response
+    (error-page
+     {:status 403
+      :title "Invalid anti-forgery token"})}))
 
 (defn wrap-formats [handler]
   (let [wrapped (-> handler wrap-params (wrap-format formats/instance))]
@@ -63,8 +62,8 @@
 <% endif %><% if auth-middleware-required %><% if not service %>
 (defn on-error [request response]
   (error-page
-    {:status 403
-     :title (str "Access to " (:uri request) " is not authorized")}))
+   {:status 403
+    :title (str "Access to " (:uri request) " is not authorized")}))
 <% else %>
 (defn on-error [request response]
   {:status 403
@@ -85,10 +84,10 @@
 (defn token [username]
   (let [claims {:user (keyword username)
                 :exp (to-timestamp
-                       (.getTime
-                         (doto (Calendar/getInstance)
-                           (.setTime (Date.))
-                           (.add Calendar/HOUR_OF_DAY 1))))}]
+                      (.getTime
+                       (doto (Calendar/getInstance)
+                         (.setTime (Date.))
+                         (.add Calendar/HOUR_OF_DAY 1))))}]
     (encrypt claims secret {:alg :a256kw :enc :a128gcm})))<% endif %>
 
 (defn wrap-auth [handler]
@@ -103,12 +102,12 @@
       wrap-flash
       (wrap-session {:cookie-attrs {:http-only true}})
       (wrap-defaults
-        (-> site-defaults
-            (assoc-in [:security :anti-forgery] false)
-            (dissoc :session)))<% else %>
+       (-> site-defaults
+           (assoc-in [:security :anti-forgery] false)
+           (dissoc :session)))<% else %>
       (wrap-defaults
-        (-> site-defaults
-            (assoc-in [:security :anti-forgery] false)
-            (assoc-in  [:session :store] (ttl-memory-store (* 60 30)))))<% endif %><% if not service %><% if servlet %>
+       (-> site-defaults
+           (assoc-in [:security :anti-forgery] false)
+           (assoc-in  [:session :store] (ttl-memory-store (* 60 30)))))<% endif %><% if not service %><% if servlet %>
       wrap-context<% endif %>
       wrap-internal-error<% endif %>))

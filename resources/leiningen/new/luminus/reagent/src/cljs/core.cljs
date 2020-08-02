@@ -1,14 +1,14 @@
 (ns <<project-ns>>.core
   (:require
-    [reagent.core :as r]
-    [reagent.dom :as rdom]
-    [goog.events :as events]
-    [goog.history.EventType :as HistoryEventType]<% if expanded %>
-    [markdown.core :refer [md->html]]<% endif %>
-    [<<project-ns>>.ajax :as ajax]
-    [ajax.core :refer [GET POST]]
-    [reitit.core :as reitit]
-    [clojure.string :as string])
+   [reagent.core :as r]
+   [reagent.dom :as rdom]
+   [goog.events :as events]
+   [goog.history.EventType :as HistoryEventType]<% if expanded %>
+   [markdown.core :refer [md->html]]<% endif %>
+   [<<project-ns>>.ajax :as ajax]
+   [ajax.core :refer [GET POST]]
+   [reitit.core :as reitit]
+   [clojure.string :as string])
   (:import goog.History))
 
 (defonce session (r/atom {:page :home}))
@@ -19,7 +19,7 @@
     :class (when (= page (:page @session)) "is-active")}
    title])
 
-(defn navbar [] <% if expanded %>
+(defn navbar []<% if expanded %>
   (r/with-let [expanded? (r/atom false)]
     [:nav.navbar.is-info>div.container
      [:div.navbar-brand
@@ -28,19 +28,17 @@
        {:data-target :nav-menu
         :on-click #(swap! expanded? not)
         :class (when @expanded? :is-active)}
-       [:span][:span][:span]]]
+       [:span] [:span] [:span]]]
      [:div#nav-menu.navbar-menu
       {:class (when @expanded? :is-active)}
       [:div.navbar-start
        [nav-link "#/" "Home" :home]
        [nav-link "#/about" "About" :about]]]])<% else %>
   [:nav
-   [nav-link "#/" "Home" :home]] <% endif %>)
-<% if expanded %>
+   [nav-link "#/" "Home" :home]] <% endif %>)<% if expanded %>
 (defn about-page []
   [:section.section>div.container>div.content
-   [:img {:src "/img/warning_clojure.png"}]])
-<% endif %>
+   [:img {:src "/img/warning_clojure.png"}]])<% endif %>
 
 (defn home-page []<% if expanded %>
   [:section.section>div.container>div.content
@@ -60,8 +58,8 @@
 
 (def router
   (reitit/router
-    [["/" :home]<% if expanded %>
-     ["/about" :about]<% endif %>]))
+   [["/" :home]<% if expanded %>
+    ["/about" :about]<% endif %>]))
 
 (defn match-route [uri]
   (->> (or (not-empty (string/replace uri #"^.*#" "")) "/")
@@ -74,9 +72,9 @@
 (defn hook-browser-navigation! []
   (doto (History.)
     (events/listen
-      HistoryEventType/NAVIGATE
-      (fn [event]
-        (swap! session assoc :page (match-route (.-token event)))))
+     HistoryEventType/NAVIGATE
+     (fn [event]
+       (swap! session assoc :page (match-route (.-token event)))))
     (.setEnabled true)))
 
 ;; -------------------------

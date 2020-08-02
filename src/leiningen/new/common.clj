@@ -10,6 +10,7 @@
 (def dev-dependency-indent 33)
 (def boot-dev-dependency-indent 30)
 (def plugin-indent 12)
+(def nikita-indent 3) ;;FIXME
 (def root-indent 2)
 (def dev-indent 18)
 (def uberjar-indent 13)
@@ -55,6 +56,7 @@
 (defn pprint-code [code]
   (-> (pprint code)
       with-out-str
+      clojure.string/trimr
       (.replaceAll "," "")))
 
 (defn form->str [form]
@@ -76,9 +78,11 @@
              (clojure.string/join (str "\n" indents)))))))
 
 (defn unwrap-map [text]
-  (let [sb (StringBuilder. text)]
-    (.setCharAt sb (.indexOf text "{") \space)
-    (.setCharAt sb (.lastIndexOf text "}") \space)
+  (let [sb (StringBuilder. text)
+        first-index (.indexOf text "{")
+        last-index (.lastIndexOf text "}")]
+    (.replace sb first-index (+ 1 first-index) "")
+    (.replace sb (- last-index 1) last-index "")
     (.toString sb)))
 
 (defn append-options [options k v]
