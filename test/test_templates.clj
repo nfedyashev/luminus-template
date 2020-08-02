@@ -8,11 +8,13 @@
   "Creates a temporary directory, then executes body, binding pathname-var as the pathname to the temporary directory.
   Note that the temporary directory is recursively deleted after body is executed."
   `(let [temp-dir# (Files/createTempDirectory "luminus-template" (into-array java.nio.file.attribute.FileAttribute []))
+         ;; _ (println temp-dir#)
          temp-dir-file# (.toFile temp-dir#)
          ~pathname-var (.toString temp-dir#)]
      (try
        ~@body
-       (finally (FileUtils/deleteDirectory temp-dir-file#)))))
+       (finally ;; (FileUtils/deleteDirectory temp-dir-file#)
+                ))))
 
 (defmacro with-persistent-temp-dir [pathname-var & body]
   "Creates a temporary directory, then executes body, binding pathname-var as the pathname to the temporary directory.
@@ -27,6 +29,7 @@
   If the exit code is 0, succeed silently.  If the exit code is non-zero, write :out to STDOUT, and :err to STDERR."
   (let [result (apply shell/sh args)
         exit-code (:exit result)]
+    (println result)
     (if (not (= 0 exit-code))
       (do
         (println (:out result))
@@ -40,41 +43,53 @@
   If you'd like to examine the generated projects, use with-persistent-temp-dir instead of with-temp-dir."
   (doseq [template-option
           [;; Don't test +boot, as this smoke-test only works w/ Leiningen right now.
+           ;; FIXME test boot manually then
            ;; "+boot"
 
            "+aleph"
-           "+auth"
-           "+auth-jwe"
-           "+cljs"
-           "+cucumber"
-           "+datomic"
-           "+graphql"
-           "+h2"
-           "+hoplon"
-           "+http-kit"
-           "+immutant"
-           "+jetty"
-           "+kee-frame"
-           "+kibit"
-           "+mongodb"
-           "+mysql"
-           "+oauth"
-           "+postgres"
-           "+reagent"
-           "+re-frame"
-           "+reitit"
-           "+sassc"
-           "+service"
-           "+servlet"
-           "+shadow-cljs"
-           "+site"
-           "+sqlite"
-           "+swagger"
-           "+war"
-           "+expanded"
-           "+basic"
-           "+undertow"]]
+           ;; "+auth"
+           ;; "+auth-jwe"
+           ;; "+cljs"
+           ;; "+cucumber"
+           ;; "+datomic"
+           ;; "+graphql"
+           ;; "+h2"
+           ;; "+hoplon"
+           ;; "+http-kit"
+           ;; "+immutant"
+           ;; "+jetty"
+           ;; "+kee-frame"
+           ;; "+kibit"
+           ;; "+mongodb"
+           ;; "+mysql"
+           ;; "+oauth"
+           ;; "+postgres"
+           ;; "+reagent"
+           ;; "+re-frame"
+
+           ;;  "+reitit"
+           ;;  "+sassc"
+           ;; "+service"
+
+           ;; "+servlet"
+           ;; "+shadow-cljs"
+           ;; "+site"
+           ;; "+sqlite"
+           ;; "+swagger"
+           ;; "+war"
+           ;; "+expanded"
+           ;; "+basic"
+           ;; "+undertow"
+           ]]
     (with-temp-dir temp-pathname
-      (is (= 0 (sh-logging-err "lein" "new" "luminus" "test-project" ":to-dir" temp-pathname ":force" "t" template-option)) (str "Generate Luminus project with template option " template-option))
-      (is (= 0 (sh-logging-err "lein" "compile" :dir temp-pathname)) (str "Compile Luminus project created with template option " template-option))
-      (is (= 0 (sh-logging-err "lein" "eastwood" :dir temp-pathname)) (str "Lint Luminus project created with template option " template-option)))))
+      (println temp-pathname)
+      (println template-option)
+      ;; (is (= 0 (sh-logging-err "lein" "new" "luminus" "test-project" ":to-dir" temp-pathname ":force" "t" template-option "+sassc" "+postgres" "+cljs" "+kibit" "+re-frame")) (str "generate luminus project with template option " template-option))
+      (is (= 0 (sh-logging-err "lein" "new" "luminus" "test-project" ":to-dir" temp-pathname ":force" "t" template-option "+sassc")) (str "generate luminus project with template option " template-option))
+      ;; (is (= 0 (sh-logging-err "lein" "compile" :dir temp-pathname)) (str "compile luminus project created with template option " template-option))
+      ;; (is (= 0 (sh-logging-err "lein" "eastwood" :dir temp-pathname)) (str "lint luminus project created with template option " template-option))
+
+      (is (= 0 (sh-logging-err "lein" "cljfmt" "check" temp-pathname)))
+
+      (println "=========================")
+      )))
